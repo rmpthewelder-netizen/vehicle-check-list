@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Professional bilingual vehicle inspection checklist for Oman Metal Industries.">
+    <meta name="theme-color" content="#9f2f3f">
+    <title>OMI Vehicle Inspection</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #111318;
+            --surface: #191d24;
+            --surface-2: #202630;
+            --surface-3: #2a313d;
+            --line: rgba(255, 255, 255, 0.10);
+            --line-strong: rgba(255, 255, 255, 0.18);
+            --text: #f7f8fb;
+            --muted: #aab3c2;
+            --soft: #d8dde7;
+            --brand: #c84d5f;
+            --brand-dark: #9f2f3f;
+            --brand-soft: rgba(200, 77, 95, 0.14);
+            --pass: #2fb66d;
+            --pass-soft: rgba(47, 182, 109, 0.14);
+            --fail: #e15b64;
+            --fail-soft: rgba(225, 91, 100, 0.14);
+            --warn: #f2ad3d;
+            --warn-soft: rgba(242, 173, 61, 0.14);
+            --radius: 8px;
+            --shadow: 0 18px 45px rgba(0, 0, 0, 0.30);
+            --focus: 0 0 0 3px rgba(200, 77, 95, 0.28);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background: var(--bg);
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text);
+            background:
+                linear-gradient(180deg, rgba(200, 77, 95, 0.12), transparent 330px),
+                var(--bg);
+            font-family: Inter, "Noto Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 15px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        [dir="rtl"] body {
+            font-family: "Noto Sans Arabic", Inter, system-ui, sans-serif;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: none;
+            box-shadow: var(--focus);
+        }
+
+        .app {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            padding: 18px;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(25, 29, 36, 0.92);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            flex: 0 0 auto;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            line-height: 1.15;
+            letter-spacing: 0;
+        }
+
+        .brand p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-flex;
+            min-height: 40px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            color: var(--text);
+            font-weight: 700;
+            transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.28);
+            background: var(--surface-3);
+        }
+
+        .btn-primary {
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+            color: white;
+        }
+
+        .btn-danger {
+            color: #ffd9dc;
+        }
+
+        .btn-icon {
+            width: 40px;
+            padding: 0;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .metric {
+            padding: 15px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .metric strong {
+            display: block;
+            font-size: clamp(1.45rem, 4vw, 2rem);
+            line-height: 1;
+        }
+
+        .metric span {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .metric.pass strong {
+            color: var(--pass);
+        }
+
+        .metric.fail strong {
+            color: var(--fail);
+        }
+
+        .verdict {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 56px;
+            margin-bottom: 18px;
+            padding: 13px 16px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--soft);
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .verdict.pass {
+            border-color: rgba(47, 182, 109, 0.55);
+            background: var(--pass-soft);
+            color: #86efac;
+        }
+
+        .verdict.fail {
+            border-color: rgba(225, 91, 100, 0.55);
+            background: var(--fail-soft);
+            color: #ffb4ba;
+        }
+
+        .panel {
+            margin-bottom: 18px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .panel-head h2 {
+            margin: 0;
+            font-size: 0.95rem;
+            letter-spacing: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .field label {
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .field input {
+            width: 100%;
+            min-height: 43px;
+            padding: 10px 11px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #101319;
+            color: var(--text);
+        }
+
+        .field input[readonly] {
+            color: var(--muted);
+        }
+
+        .checklist {
+            overflow: hidden;
+        }
+
+        .list-head,
+        .row {
+            display: grid;
+            grid-template-columns: 52px minmax(190px, 1fr) 126px 52px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .list-head {
+            padding: 11px 16px;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.035);
+            border-bottom: 1px solid var(--line);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .row {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .row:last-child {
+            border-bottom: 0;
+        }
+
+        .row.failed {
+            background: var(--fail-soft);
+        }
+
+        .number {
+            color: var(--muted);
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .item-title {
+            display: grid;
+            gap: 2px;
+        }
+
+        .item-title strong {
+            font-weight: 700;
+        }
+
+        .item-title span {
+            color: var(--muted);
+            font-family: "Noto Sans Arabic", Inter, sans-serif;
+            font-size: 0.92rem;
+        }
+
+        .status-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .choice {
+            display: inline-grid;
+            width: 42px;
+            height: 38px;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #101319;
+            color: var(--muted);
+        }
+
+        .choice:hover {
+            border-color: var(--line-strong);
+            color: white;
+        }
+
+        .choice.pass.active {
+            border-color: transparent;
+            background: var(--pass);
+            color: white;
+        }
+
+        .choice.fail.active {
+            border-color: transparent;
+            background: var(--fail);
+            color: white;
+        }
+
+        .choice.note.active {
+            border-color: rgba(242, 173, 61, 0.55);
+            background: var(--warn-soft);
+            color: #ffd489;
+        }
+
+        .note-row {
+            display: none;
+            padding: 0 16px 14px 78px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        [dir="rtl"] .note-row {
+            padding: 0 78px 14px 16px;
+        }
+
+        .note-row.open {
+            display: block;
+        }
+
+        .note-row textarea {
+            width: 100%;
+            min-height: 78px;
+            resize: vertical;
+            padding: 11px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #101319;
+            color: var(--text);
+        }
+
+        .toast-wrap {
+            position: fixed;
+            top: 16px;
+            inset-inline-end: 16px;
+            z-index: 100;
+            display: grid;
+            gap: 10px;
+            width: min(360px, calc(100vw - 32px));
+        }
+
+        .toast {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 13px;
+            border: 1px solid var(--line);
+            border-inline-start: 4px solid var(--brand);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            box-shadow: var(--shadow);
+            color: var(--text);
+            font-weight: 650;
+        }
+
+        .toast.success {
+            border-inline-start-color: var(--pass);
+        }
+
+        .toast.error {
+            border-inline-start-color: var(--fail);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: none;
+            place-items: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-backdrop.open {
+            display: grid;
+        }
+
+        .modal {
+            width: min(430px, 100%);
+            padding: 20px;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .modal h2 {
+            margin: 0 0 8px;
+            font-size: 1.15rem;
+        }
+
+        .modal p {
+            margin: 0 0 18px;
+            color: var(--muted);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        #print-area {
+            position: fixed;
+            top: 0;
+            left: -10000px;
+            width: 794px;
+            max-width: 794px;
+            min-height: 1123px;
+            overflow: hidden;
+            visibility: hidden;
+            pointer-events: none;
+            background: #fff;
+            color: #111;
+        }
+
+        @media (max-width: 780px) {
+            .app {
+                padding: 12px;
+            }
+
+            .topbar {
+                grid-template-columns: 1fr;
+                position: static;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .actions .btn {
+                flex: 1;
+            }
+
+            .dashboard {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .list-head {
+                display: none;
+            }
+
+            .row {
+                grid-template-columns: 44px 1fr 52px;
+                grid-template-areas:
+                    "num title note"
+                    "actions actions actions";
+                gap: 12px;
+            }
+
+            .number {
+                grid-area: num;
+            }
+
+            .item-title {
+                grid-area: title;
+            }
+
+            .status-actions {
+                grid-area: actions;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .status-actions .choice {
+                width: 100%;
+            }
+
+            .choice.note {
+                grid-area: note;
+                width: 42px;
+            }
+
+            .note-row,
+            [dir="rtl"] .note-row {
+                padding: 0 16px 14px;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 24mm 18mm 16mm 18mm;
+            }
+
+            * {
+                box-sizing: border-box !important;
+                color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            html,
+            body {
+                background: white !important;
+                color: #111 !important;
+                width: 210mm;
+                min-height: auto;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+
+            .app,
+            .toast-wrap,
+            .modal-backdrop {
+                display: none !important;
+            }
+
+            #print-area {
+                display: block;
+                position: static;
+                left: auto;
+                top: auto;
+                visibility: visible;
+                width: 100%;
+                max-width: 170mm;
+                min-height: 0;
+                margin: 0 auto;
+                padding-top: 18mm;
+                overflow: hidden;
+                color: #111;
+                font-family: Inter, "Noto Sans Arabic", Arial, sans-serif;
+                font-size: 9px;
+            }
+
+            .print-header {
+                display: grid;
+                grid-template-columns: 30mm minmax(0, 1fr) 36mm;
+                gap: 4mm;
+                align-items: center;
+                width: 100%;
+                min-width: 0;
+                padding: 0 0 3mm;
+                border-bottom: 3px solid #9f2f3f;
+                break-after: avoid;
+            }
+
+            .print-header>* {
+                min-width: 0;
+            }
+
+            .print-logo {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .print-logo img {
+                display: block;
+                width: 28mm;
+                max-width: 28mm;
+                max-height: 11mm;
+                object-fit: contain;
+            }
+
+            .print-header h1,
+            .print-header h2,
+            .print-header p {
+                margin: 0;
+            }
+
+            .print-header h1 {
+                font-size: 11px;
+                line-height: 1.2;
+                overflow-wrap: anywhere;
+            }
+
+            .print-header h2 {
+                margin-top: 2px;
+                color: #9f2f3f;
+                font-size: 9.5px;
+                letter-spacing: 0.05em;
+                overflow-wrap: anywhere;
+            }
+
+            .print-header p,
+            .print-meta {
+                color: #555;
+                font-size: 8px;
+            }
+
+            .print-meta {
+                display: grid;
+                gap: 2px;
+                text-align: end;
+                overflow-wrap: anywhere;
+            }
+
+            .print-info {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5mm;
+                width: 100%;
+                min-width: 0;
+                margin: 3mm 0 2.4mm;
+                break-after: avoid;
+            }
+
+            .print-field {
+                min-width: 0;
+                min-height: 10.5mm;
+                padding: 1.4mm;
+                border: 1px solid #d9d9d9;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+
+            .print-field label {
+                display: block;
+                color: #666;
+                font-size: 10px;
+                font-weight: 800;
+                text-transform: uppercase;
+            }
+
+            .print-field strong {
+                display: block;
+                margin-top: 1mm;
+                font-size: 10px;
+                overflow-wrap: anywhere;
+            }
+
+            .print-verdict {
+                margin: 2.1mm 0;
+                padding: 1.5mm;
+                border-radius: 6px;
+                background: #f4f4f4;
+                color: #555;
+                font-weight: 800;
+                text-align: center;
+                break-after: avoid;
+            }
+
+            .print-verdict.pass {
+                background: #dcfce7;
+                color: #166534;
+            }
+
+            .print-verdict.fail {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+
+            .print-table {
+                width: 100%;
+                max-width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+                font-size: 7.4px;
+                line-height: 1.08;
+            }
+
+            .print-table th,
+            .print-table td {
+                padding: 0.75mm 1mm;
+                border: 1px solid #d9d9d9;
+                vertical-align: top;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            .print-table th {
+                background: #f3f4f6;
+                text-align: start;
+            }
+
+            .print-table thead {
+                display: table-header-group;
+            }
+
+            .print-table tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .arabic {
+                direction: rtl;
+                display: block;
+                color: #555;
+                font-family: "Noto Sans Arabic", Arial, sans-serif;
+            }
+
+            .status-pill {
+                display: inline-block;
+                max-width: 100%;
+                padding: 0.6mm 1.2mm;
+                border-radius: 999px;
+                font-weight: 800;
+                text-align: center;
+                white-space: normal;
+            }
+
+            .status-pill.pass {
+                background: #dcfce7;
+                color: #166534;
+            }
+
+            .status-pill.fail {
+                background: #fee2e2;
+                color: #991b1b;
+            }
+
+            .signatures {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8mm;
+                margin-top: 5mm;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .signature-box {
+                min-width: 0;
+                padding-top: 7mm;
+                border-top: 1px solid #999;
+                color: #555;
+                font-size: 9px;
+            }
+
+            .print-footer {
+                margin-top: 4mm;
+                padding-top: 2mm;
+                border-top: 1px solid #ddd;
+                color: #666;
+                font-size: 8px;
+                text-align: center;
+                overflow-wrap: anywhere;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+    <main class="app">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">OMI</div>
+                <div>
+                    <h1 data-i18n="appTitle">OMI Vehicle Inspection</h1>
+                    <p data-i18n="appSubtitle">Bilingual field checklist and printable inspection report</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn" type="button" id="languageBtn">
+                    <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                    <span id="languageLabel">عربي</span>
+                </button>
+                <button class="btn btn-danger btn-icon" type="button" id="resetBtn" title="Reset form" aria-label="Reset form">
+                    <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-primary" type="button" id="printBtn">
+                    <i class="fa-solid fa-print" aria-hidden="true"></i>
+                    <span data-i18n="print">Print</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard" aria-label="Inspection summary">
+            <div class="metric pass">
+                <strong id="passCount">0</strong>
+                <span data-i18n="passed">Passed</span>
+            </div>
+            <div class="metric fail">
+                <strong id="failCount">0</strong>
+                <span data-i18n="failed">Failed</span>
+            </div>
+            <div class="metric">
+                <strong id="progressPct">0%</strong>
+                <span data-i18n="progress">Progress</span>
+            </div>
+            <div class="metric">
+                <strong id="totalCount">21</strong>
+                <span data-i18n="total">Total</span>
+            </div>
+        </section>
+
+        <div class="verdict" id="verdict">
+            <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            <span data-i18n="pending">Inspection Incomplete</span>
+        </div>
+
+        <section class="panel" aria-labelledby="vehicleTitle">
+            <div class="panel-head">
+                <h2 id="vehicleTitle" data-i18n="vehicleDetails">Vehicle Details</h2>
+            </div>
+            <form class="form-grid" id="vehicleForm" autocomplete="off">
+                <div class="field">
+                    <label for="regNo" data-i18n="regNo">Reg Number</label>
+                    <input id="regNo" name="regNo" type="text" placeholder="ABC-1234" required>
+                </div>
+                <div class="field">
+                    <label for="makeModel" data-i18n="makeModel">Make & Model</label>
+                    <input id="makeModel" name="makeModel" type="text" placeholder="Toyota Land Cruiser" required>
+                </div>
+                <div class="field">
+                    <label for="odometer" data-i18n="odometer">Odometer (km)</label>
+                    <input id="odometer" name="odometer" type="number" min="0" step="1" placeholder="50000">
+                </div>
+                <div class="field">
+                    <label for="inspector" data-i18n="inspector">Inspector Name</label>
+                    <input id="inspector" name="inspector" type="text" placeholder="Name" required>
+                </div>
+                <div class="field">
+                    <label for="inspectionDate" data-i18n="date">Date</label>
+                    <input id="inspectionDate" name="inspectionDate" type="text" readonly>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel checklist" aria-labelledby="checklistTitle">
+            <div class="panel-head">
+                <h2 id="checklistTitle" data-i18n="checklist">Inspection Checklist</h2>
+            </div>
+            <div class="list-head" aria-hidden="true">
+                <span>#</span>
+                <span data-i18n="item">Item</span>
+                <span data-i18n="status">Status</span>
+                <span data-i18n="notes">Notes</span>
+            </div>
+            <div id="checklistRows"></div>
+        </section>
+    </main>
+
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal">
+            <h2 id="modalTitle">Confirm</h2>
+            <p id="modalBody">Are you sure?</p>
+            <div class="modal-actions">
+                <button class="btn" type="button" id="modalCancel" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" type="button" id="modalConfirm">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <section id="print-area" aria-hidden="true">
+        <div class="print-header">
+            <div class="print-logo">
+                <img id="printLogo" src="omi-logo.png" alt="OMI" loading="eager" decoding="sync">
+            </div>
+            <div>
+                <h1>Oman Metal Industries & Contracting Co. LLC</h1>
+                <p>Serving the Oil & Gas Industry Since 1985</p>
+                <h2>Vehicle Inspection Report</h2>
+            </div>
+            <div class="print-meta">
+                <div><strong>Report ID:</strong> <span id="printReportId">-</span></div>
+                <div><strong>Date:</strong> <span id="printDate">-</span></div>
+                <div><strong>Inspector:</strong> <span id="printInspector">-</span></div>
+            </div>
+        </div>
+
+        <div class="print-info">
+            <div class="print-field">
+                <label>Reg Number / <span class="arabic">رقم اللوحة</span></label>
+                <strong id="printRegNo">-</strong>
+            </div>
+            <div class="print-field">
+                <label>Make & Model / <span class="arabic">الشركة والموديل</span></label>
+                <strong id="printMakeModel">-</strong>
+            </div>
+            <div class="print-field">
+                <label>Odometer / <span class="arabic">عداد المسافة</span></label>
+                <strong id="printOdometer">-</strong>
+            </div>
+        </div>
+
+        <div class="print-verdict" id="printVerdict">Incomplete / غير مكتمل</div>
+
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th style="width: 6%;">#</th>
+                    <th style="width: 48%;">Item / <span class="arabic">البند</span></th>
+                    <th style="width: 18%;">Status / <span class="arabic">الحالة</span></th>
+                    <th style="width: 28%;">Remarks / <span class="arabic">ملاحظات</span></th>
+                </tr>
+            </thead>
+            <tbody id="printRows"></tbody>
+        </table>
+
+        <div class="signatures">
+            <div class="signature-box">Inspector Signature / <span class="arabic">توقيع المفتش</span></div>
+            <div class="signature-box">Client Signature / <span class="arabic">توقيع العميل</span></div>
+        </div>
+
+        <div class="print-footer">
+            Plot 900, Road 9, Rusayl Industrial Estate, Muscat, Oman | Tel: +968 24446132 | Email: sales@omi.om
+        </div>
+    </section>
+
+    <script>
+        const checklistData = [
+            { en: "Body Condition", ar: "هيكل السيارة" },
+            { en: "Battery", ar: "البطارية" },
+            { en: "First Aid Kit", ar: "صندوق الإسعافات الأولية" },
+            { en: "Steering Wheel", ar: "المقود" },
+            { en: "Engine Oil", ar: "زيت المحرك" },
+            { en: "Fire Extinguisher", ar: "مطفأة الحريق" },
+            { en: "Wipers & Washers", ar: "المساحات والغسالات" },
+            { en: "Coolant Level", ar: "مستوى سائل التبريد" },
+            { en: "Warning Triangle", ar: "مثلث التحذير" },
+            { en: "Lights (All)", ar: "الإضاءة بالكامل" },
+            { en: "Horn", ar: "المنبه" },
+            { en: "Jack & Tools", ar: "الرافعة والأدوات" },
+            { en: "Tire Condition", ar: "حالة الإطارات" },
+            { en: "Fuel Level", ar: "مستوى الوقود" },
+            { en: "Brakes (Foot/Hand)", ar: "الفرامل" },
+            { en: "Mirrors", ar: "المرايا" },
+            { en: "Seat Belts", ar: "أحزمة الأمان" },
+            { en: "Radio / Comms", ar: "الراديو والاتصالات" },
+            { en: "Cruise Control", ar: "مثبت السرعة" },
+            { en: "Registration Documents", ar: "وثائق التسجيل" },
+            { en: "Spare Key", ar: "المفتاح الاحتياطي" }
+        ];
+
+        const i18n = {
+            en: {
+                appTitle: "OMI Vehicle Inspection",
+                appSubtitle: "Bilingual field checklist and printable inspection report",
+                print: "Print",
+                passed: "Passed",
+                failed: "Failed",
+                progress: "Progress",
+                total: "Total",
+                pending: "Inspection Incomplete",
+                passResult: "Result: Pass",
+                failResult: "Result: Fail",
+                partialResult: "Inspection In Progress",
+                vehicleDetails: "Vehicle Details",
+                regNo: "Reg Number",
+                makeModel: "Make & Model",
+                odometer: "Odometer (km)",
+                inspector: "Inspector Name",
+                date: "Date",
+                checklist: "Inspection Checklist",
+                item: "Item",
+                status: "Status",
+                notes: "Notes",
+                pass: "Pass",
+                fail: "Fail",
+                note: "Note",
+                notePlaceholder: "Add defect details, corrective action, or observations.",
+                cancel: "Cancel",
+                resetTitle: "Reset inspection?",
+                resetBody: "This clears the vehicle details, checklist status, and all notes.",
+                resetConfirm: "Reset",
+                resetDone: "Inspection reset.",
+                missingTitle: "Complete required details",
+                missingBody: "Reg Number, Make & Model, and Inspector Name are required for a professional report.",
+                printAnyway: "Print anyway",
+                reportReady: "Report ready for printing.",
+                reportSent: "Print dialog opened."
+            },
+            ar: {
+                appTitle: "فحص المركبات - OMI",
+                appSubtitle: "قائمة فحص ثنائية اللغة مع تقرير قابل للطباعة",
+                print: "طباعة",
+                passed: "ناجح",
+                failed: "راسب",
+                progress: "التقدم",
+                total: "الإجمالي",
+                pending: "الفحص غير مكتمل",
+                passResult: "النتيجة: ناجح",
+                failResult: "النتيجة: راسب",
+                partialResult: "الفحص قيد التنفيذ",
+                vehicleDetails: "بيانات المركبة",
+                regNo: "رقم اللوحة",
+                makeModel: "الشركة والموديل",
+                odometer: "عداد المسافة (كم)",
+                inspector: "اسم المفتش",
+                date: "التاريخ",
+                checklist: "قائمة الفحص",
+                item: "البند",
+                status: "الحالة",
+                notes: "ملاحظات",
+                pass: "ناجح",
+                fail: "راسب",
+                note: "ملاحظة",
+                notePlaceholder: "أضف تفاصيل العيب أو الإجراء التصحيحي أو الملاحظات.",
+                cancel: "إلغاء",
+                resetTitle: "إعادة تعيين الفحص؟",
+                resetBody: "سيتم مسح بيانات المركبة وحالة الفحص وجميع الملاحظات.",
+                resetConfirm: "إعادة تعيين",
+                resetDone: "تمت إعادة تعيين الفحص.",
+                missingTitle: "أكمل البيانات المطلوبة",
+                missingBody: "رقم اللوحة، الشركة والموديل، واسم المفتش مطلوبة لإصدار تقرير مهني.",
+                printAnyway: "طباعة على أي حال",
+                reportReady: "التقرير جاهز للطباعة.",
+                reportSent: "تم فتح نافذة الطباعة."
+            }
+        };
+
+        const STORAGE_KEY = "omi-vehicle-inspection-v2";
+        const COUNTER_KEY = "omi-report-counter";
+        const els = {
+            html: document.documentElement,
+            rows: document.getElementById("checklistRows"),
+            passCount: document.getElementById("passCount"),
+            failCount: document.getElementById("failCount"),
+            progressPct: document.getElementById("progressPct"),
+            totalCount: document.getElementById("totalCount"),
+            verdict: document.getElementById("verdict"),
+            languageBtn: document.getElementById("languageBtn"),
+            languageLabel: document.getElementById("languageLabel"),
+            resetBtn: document.getElementById("resetBtn"),
+            printBtn: document.getElementById("printBtn"),
+            modal: document.getElementById("modalBackdrop"),
+            modalTitle: document.getElementById("modalTitle"),
+            modalBody: document.getElementById("modalBody"),
+            modalCancel: document.getElementById("modalCancel"),
+            modalConfirm: document.getElementById("modalConfirm"),
+            toastWrap: document.getElementById("toastWrap"),
+            form: document.getElementById("vehicleForm"),
+            fields: {
+                regNo: document.getElementById("regNo"),
+                makeModel: document.getElementById("makeModel"),
+                odometer: document.getElementById("odometer"),
+                inspector: document.getElementById("inspector"),
+                date: document.getElementById("inspectionDate")
+            }
+        };
+
+        const state = loadState();
+        let modalAction = null;
+
+        function createInitialState() {
+            return {
+                lang: "en",
+                form: {
+                    regNo: "",
+                    makeModel: "",
+                    odometer: "",
+                    inspector: ""
+                },
+                items: checklistData.map((item) => ({
+                    ...item,
+                    status: null,
+                    note: "",
+                    noteOpen: false
+                }))
+            };
+        }
+
+        function loadState() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (!saved || !Array.isArray(saved.items)) return createInitialState();
+
+                const next = createInitialState();
+                next.lang = saved.lang === "ar" ? "ar" : "en";
+                next.form = { ...next.form, ...(saved.form || {}) };
+                next.items = next.items.map((item, index) => ({
+                    ...item,
+                    status: ["pass", "fail"].includes(saved.items[index]?.status) ? saved.items[index].status : null,
+                    note: String(saved.items[index]?.note || ""),
+                    noteOpen: Boolean(saved.items[index]?.noteOpen)
+                }));
+                return next;
+            } catch {
+                return createInitialState();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function t(key) {
+            return i18n[state.lang][key] || i18n.en[key] || key;
+        }
+
+        function formatDate() {
+            const locale = state.lang === "ar" ? "ar-OM" : "en-GB";
+            return new Intl.DateTimeFormat(locale, {
+                year: "numeric",
+                month: "short",
+                day: "2-digit"
+            }).format(new Date());
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function sanitizeFilePart(value, fallback = "UNKNOWN") {
+            const cleaned = String(value || "")
+                .trim()
+                .toUpperCase()
+                .replace(/[^A-Z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, "");
+
+            return cleaned || fallback;
+        }
+
+        function getInspectionDateStamp() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
+        function getNextSequenceNumber() {
+            try {
+                let counter = parseInt(localStorage.getItem(COUNTER_KEY), 10);
+                if (isNaN(counter) || counter < 0) counter = 0;
+                counter += 1;
+                localStorage.setItem(COUNTER_KEY, counter.toString());
+                return String(counter).padStart(3, "0");
+            } catch {
+                return String(Math.floor(Math.random() * 900 + 100));
+            }
+        }
+
+        function createReportId() {
+            const vehicleNo = sanitizeFilePart(state.form.regNo, "NO-REG");
+            const datePart = getInspectionDateStamp();
+            const sequence = getNextSequenceNumber();
+            return `${vehicleNo}_${datePart}_${sequence}`;
+        }
+
+        function applyLanguage() {
+            els.html.lang = state.lang;
+            els.html.dir = state.lang === "ar" ? "rtl" : "ltr";
+            els.languageLabel.textContent = state.lang === "ar" ? "English" : "عربي";
+            els.fields.date.value = formatDate();
+
+            document.querySelectorAll("[data-i18n]").forEach((node) => {
+                node.textContent = t(node.dataset.i18n);
+            });
+
+            renderChecklist();
+            updateSummary();
+        }
+
+        function renderChecklist() {
+            els.rows.innerHTML = state.items.map((item, index) => {
+                const passActive = item.status === "pass" ? " active" : "";
+                const failActive = item.status === "fail" ? " active" : "";
+                const noteActive = item.note.trim() ? " active" : "";
+                const failed = item.status === "fail" ? " failed" : "";
+                const open = item.noteOpen ? " open" : "";
+
+                return `
+                    <div class="row${failed}" data-index="${index}">
+                        <div class="number">${index + 1}</div>
+                        <div class="item-title">
+                            <strong>${escapeHtml(item.en)}</strong>
+                            <span lang="ar" dir="rtl">${escapeHtml(item.ar)}</span>
+                        </div>
+                        <div class="status-actions">
+                            <button class="choice pass${passActive}" type="button" data-action="status" data-status="pass" aria-label="${t("pass")}: ${escapeHtml(item.en)}">
+                                <i class="fa-solid fa-check" aria-hidden="true"></i>
+                            </button>
+                            <button class="choice fail${failActive}" type="button" data-action="status" data-status="fail" aria-label="${t("fail")}: ${escapeHtml(item.en)}">
+                                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <button class="choice note${noteActive}" type="button" data-action="note" aria-label="${t("note")}: ${escapeHtml(item.en)}">
+                            <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="note-row${open}" data-note-index="${index}">
+                        <textarea data-action="note-text" placeholder="${t("notePlaceholder")}">${escapeHtml(item.note)}</textarea>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function updateSummary() {
+            const total = state.items.length;
+            const pass = state.items.filter((item) => item.status === "pass").length;
+            const fail = state.items.filter((item) => item.status === "fail").length;
+            const checked = pass + fail;
+            const progress = total ? Math.round((checked / total) * 100) : 0;
+
+            els.passCount.textContent = pass;
+            els.failCount.textContent = fail;
+            els.progressPct.textContent = `${progress}%`;
+            els.totalCount.textContent = total;
+
+            els.verdict.className = "verdict";
+            if (fail > 0) {
+                els.verdict.classList.add("fail");
+                els.verdict.innerHTML = `<i class="fa-solid fa-circle-xmark" aria-hidden="true"></i><span>${t("failResult")}</span>`;
+            } else if (checked === total && total > 0) {
+                els.verdict.classList.add("pass");
+                els.verdict.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>${t("passResult")}</span>`;
+            } else if (checked > 0) {
+                els.verdict.innerHTML = `<i class="fa-solid fa-spinner" aria-hidden="true"></i><span>${t("partialResult")} (${checked}/${total})</span>`;
+            } else {
+                els.verdict.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i><span>${t("pending")}</span>`;
+            }
+        }
+
+        function syncFormToState() {
+            state.form.regNo = els.fields.regNo.value.trim();
+            state.form.makeModel = els.fields.makeModel.value.trim();
+            state.form.odometer = els.fields.odometer.value.trim();
+            state.form.inspector = els.fields.inspector.value.trim();
+            saveState();
+        }
+
+        function hydrateForm() {
+            els.fields.regNo.value = state.form.regNo;
+            els.fields.makeModel.value = state.form.makeModel;
+            els.fields.odometer.value = state.form.odometer;
+            els.fields.inspector.value = state.form.inspector;
+            els.fields.date.value = formatDate();
+        }
+
+        function setStatus(index, status) {
+            const item = state.items[index];
+            item.status = item.status === status ? null : status;
+            if (item.status === "fail") item.noteOpen = true;
+            saveState();
+            renderChecklist();
+            updateSummary();
+        }
+
+        function toggleNote(index) {
+            state.items[index].noteOpen = !state.items[index].noteOpen;
+            saveState();
+            renderChecklist();
+        }
+
+        function setNote(index, value) {
+            state.items[index].note = value;
+            saveState();
+            updateSummary();
+        }
+
+        function showToast(message, type = "info") {
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="fa-solid ${type === "success" ? "fa-check" : "fa-circle-info"}" aria-hidden="true"></i><span>${escapeHtml(message)}</span>`;
+            els.toastWrap.appendChild(toast);
+            setTimeout(() => toast.remove(), 3200);
+        }
+
+        function openModal({ title, body, confirmText, action }) {
+            modalAction = action;
+            els.modalTitle.textContent = title;
+            els.modalBody.textContent = body;
+            els.modalConfirm.textContent = confirmText;
+            els.modal.classList.add("open");
+            els.modalConfirm.focus();
+        }
+
+        function closeModal() {
+            modalAction = null;
+            els.modal.classList.remove("open");
+        }
+
+        function resetInspection() {
+            const fresh = createInitialState();
+            state.form = fresh.form;
+            state.items = fresh.items;
+            hydrateForm();
+            saveState();
+            applyLanguage();
+            showToast(t("resetDone"), "success");
+        }
+
+        function getReportStatus() {
+            const total = state.items.length;
+            const fail = state.items.some((item) => item.status === "fail");
+            const checked = state.items.filter((item) => item.status).length;
+
+            if (fail) return { key: "fail", text: "Result: Fail / النتيجة: راسب" };
+            if (checked === total && total > 0) return { key: "pass", text: "Result: Pass / النتيجة: ناجح" };
+            return { key: "incomplete", text: "Incomplete / غير مكتمل" };
+        }
+
+        function buildReport() {
+            syncFormToState();
+
+            const reportStatus = getReportStatus();
+            const reportId = createReportId(); // Now returns VEHICLE-NUMBER_YYYY-MM-DD_001
+            const printVerdict = document.getElementById("printVerdict");
+
+            document.getElementById("printReportId").textContent = reportId;
+            document.getElementById("printDate").textContent = formatDate();
+            document.getElementById("printInspector").textContent = state.form.inspector || "-";
+            document.getElementById("printRegNo").textContent = state.form.regNo || "-";
+            document.getElementById("printMakeModel").textContent = state.form.makeModel || "-";
+            document.getElementById("printOdometer").textContent = state.form.odometer ? `${state.form.odometer} km` : "-";
+
+            printVerdict.className = `print-verdict ${reportStatus.key}`;
+            printVerdict.textContent = reportStatus.text;
+
+            document.getElementById("printRows").innerHTML = state.items.map((item, index) => {
+                const status = item.status || "pending";
+                const label = {
+                    pass: "PASS / ناجح",
+                    fail: "FAIL / راسب",
+                    pending: "- / -"
+                }[status];
+                const statusClass = status === "pass" || status === "fail" ? status : "";
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>
+                            <strong>${escapeHtml(item.en)}</strong>
+                            <span class="arabic">${escapeHtml(item.ar)}</span>
+                        </td>
+                        <td><span class="status-pill ${statusClass}">${label}</span></td>
+                        <td>${item.note.trim() ? escapeHtml(item.note) : "-"}</td>
+                    </tr>
+                `;
+            }).join("");
+
+            return { reportId };
+        }
+
+        function validateBeforePrint() {
+            syncFormToState();
+            return Boolean(state.form.regNo && state.form.makeModel && state.form.inspector);
+        }
+
+        async function waitForPrintAssets() {
+            if (document.fonts?.ready) {
+                await document.fonts.ready.catch(() => {});
+            }
+
+            const logo = document.getElementById("printLogo");
+            if (!logo) return;
+
+            if (logo.complete && logo.naturalWidth > 0) return;
+
+            await new Promise((resolve) => {
+                const done = () => resolve();
+                logo.addEventListener("load", done, { once: true });
+                logo.addEventListener("error", done, { once: true });
+                setTimeout(done, 1200);
+            });
+
+            if (logo.decode && logo.naturalWidth > 0) {
+                await logo.decode().catch(() => {});
+            }
+        }
+
+        async function printReport() {
+            const { reportId } = buildReport(); // reportId is the file name
+            await waitForPrintAssets();
+            showToast(t("reportReady"), "success");
+
+            const originalTitle = document.title;
+            document.title = reportId; // file name as title, also used by browser for PDF name
+
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            await new Promise((resolve) => setTimeout(resolve, 100));
+
+            const restoreTitle = () => {
+                document.title = originalTitle;
+                window.removeEventListener("afterprint", restoreTitle);
+            };
+            window.addEventListener("afterprint", restoreTitle);
+
+            window.print();
+            showToast(t("reportSent"), "success");
+        }
+
+        els.rows.addEventListener("click", (event) => {
+            const button = event.target.closest("button[data-action]");
+            if (!button) return;
+
+            const row = button.closest(".row");
+            const index = Number(row?.dataset.index);
+            if (!Number.isInteger(index)) return;
+
+            if (button.dataset.action === "status") setStatus(index, button.dataset.status);
+            if (button.dataset.action === "note") toggleNote(index);
+        });
+
+        els.rows.addEventListener("input", (event) => {
+            if (event.target.dataset.action !== "note-text") return;
+            const wrapper = event.target.closest(".note-row");
+            const index = Number(wrapper?.dataset.noteIndex);
+            if (Number.isInteger(index)) setNote(index, event.target.value);
+        });
+
+        els.form.addEventListener("input", syncFormToState);
+
+        els.languageBtn.addEventListener("click", () => {
+            state.lang = state.lang === "en" ? "ar" : "en";
+            saveState();
+            applyLanguage();
+        });
+
+        els.resetBtn.addEventListener("click", () => {
+            openModal({
+                title: t("resetTitle"),
+                body: t("resetBody"),
+                confirmText: t("resetConfirm"),
+                action: "reset"
+            });
+        });
+
+        els.printBtn.addEventListener("click", () => {
+            if (validateBeforePrint()) {
+                printReport();
+                return;
+            }
+
+            openModal({
+                title: t("missingTitle"),
+                body: t("missingBody"),
+                confirmText: t("printAnyway"),
+                action: "print"
+            });
+        });
+
+        els.modalCancel.addEventListener("click", closeModal);
+        els.modal.addEventListener("click", (event) => {
+            if (event.target === els.modal) closeModal();
+        });
+        els.modalConfirm.addEventListener("click", () => {
+            const action = modalAction;
+            closeModal();
+            if (action === "reset") resetInspection();
+            if (action === "print") printReport();
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && els.modal.classList.contains("open")) closeModal();
+        });
+
+        hydrateForm();
+        applyLanguage();
+    </script>
+</body>
+</html>
